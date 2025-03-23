@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png" sizes="16x16">
+    <style>
+      body{
+        padding: auto;
+      }
+       h1{
+        color: aqua;
+        text-shadow: 20pt;
+        margin: 10%;
+       }
+       form{
+        padding: 10%;
+        height: 100vh;
+       }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+      <br>
+      
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">CRS</a>
+          <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">About</a>
+                <ul class="dropdown-menu" style="padding: 20%;">
+                  <p style=" display: flex; ">  Hi I am Ayush Kumar Sah,Btech CSE IOT from IEM Kolkata. This is my final year project on Crop Recommendation Sytem using machine learning and is under development. </p>
+                </ul>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+
+       <br><br><br>
+       <figure class="text-center">
+        <h1 class="display-5 mt-2 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Crop Recommendation System</h1>
+        </figure>
+        <!-- Content here -->
+        <form action="/predict" class="mt-1 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3 mb-2" method="post">
+        <div class="row">
+            <div class=" col form-floating mb-4">
+                <input type="number" name="Nitrogen" class="form-control" id="Nitrogen" placeholder="0" required>
+                <label class="text-wrap" style="margin-left: 7px;" for="Nitrogen">Enter Nitrogen level</label>
+              </div>
+              <div class=" col form-floating mb-4">
+                <input type="number" name="Potassium" class="form-control" id="Potassium" placeholder="0"  required>
+                <label class="text-wrap" style="margin-left: 7px;" for="Potassium">Enter Potassium level</label>
+              </div>
+          </div>
+
+      <div class="row">
+        <div class=" col form-floating mb-4">
+            <input type="number" class="form-control" name="Phosphorus" id="Phosphorus" placeholder="0" required>
+            <label class="text-wrap" style="margin-left: 7px;" for="Phosphorus">Enter Phosphorus level</label>
+          </div>
+          <div class=" col form-floating mb-4">
+            <input type="number" step="0.01" class="form-control me-3 ml-4" name="Temperature" id="Temperature" placeholder="0" required>
+            <label  class="text-wrap" style="margin-left: 7px;" for="Temperature">Enter Temperature(C)</label>
+          </div>
+      </div>
+      <div class="row">
+        <div class=" col form-floating mb-4">
+            <input type="number" class="form-control" name="Humidity" id="Humidity" placeholder="0" required>
+            <label class="text-wrap" style="margin-left: 7px;" for="Humidity">Humidity in %</label>
+          </div>
+          <div class=" col form-floating mb-4">
+            <input type="number" step="0.01" name="Ph" class="form-control me-3 ml-4" id="Ph" placeholder="0" required>
+            <label class="text-wrap" style="margin-left: 7px;" for="Ph">Enter Ph level</label>
+          </div>
+      </div>
+            <div class="row">
+                <div class="col form-floating mb-4">
+                    <input type="number" class="form-control me-3 ml-4" name="Rainfall" id="Rainfall" placeholder="0" required>
+                    <label class="text-wrap" style="margin-left: 7px;" for="Rainfall">Enter Rainfall(mm)</label>
+                </div>
+                <div class="col"></div>
+            </div>
+      <div class="row mt-4 mb-4">
+      <div class="col-md-12 text-center">
+				<button type="submit" class="btn btn-primary btn-lg">Get Recommendation</button>
+			</div>
+      </div>
+       </form>
+      </div>
+
+     {% if result %}
+     <hr class="border border-primary border-3 opacity-50">
+      <div class="row mt-4 mb-2">
+        <div class="col"></div>
+       <div class="card col text-center text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3" style="width:18rem;">
+           <img src="/static/image.jpeg" class="card-img-top rounded mx-auto mt-3" alt="...">
+           <div class="card-body">
+               <h5 class="card-body">Recommend Crop:</h5>
+               <p class="card-text">{{result}}</p>
+           </div>
+       </div>
+       <div class="col descrip">
+          
+       </div>
+       </div>
+     {% endif %}
+    
+
+
+      <div class="dropdown border position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle" style="border-radius: 6%;z-index: 2;">
+
+        <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (light)" >
+          <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+          <span  id="bd-theme-text">Toggle theme</span>
+        </button><ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text" >
+          <li>
+            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light" aria-pressed="true">
+              <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+              Light
+              <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+              <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href=""></use></svg>
+              Dark
+              <svg class="bi ms-auto d-none" width="1em" height="1em"><use href=""></use></svg>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+              <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
+              Auto
+              <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script >
+        (() => {
+    'use strict'
+    
+    if (performance.navigation.type === 1) {
+                window.location.href = "/";
+            }
+
+    const getStoredTheme = () => localStorage.getItem('theme')
+    const setStoredTheme = theme => localStorage.setItem('theme', theme)
+
+    const getPreferredTheme = () => {
+      const storedTheme = getStoredTheme()
+      if (storedTheme) {
+        return storedTheme
+      }
+
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    }
+
+    const setTheme = theme => {
+      if (theme === 'auto') {
+        document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+      } else {
+        document.documentElement.setAttribute('data-bs-theme', theme)
+      }
+    }
+
+    setTheme(getPreferredTheme())
+
+    const showActiveTheme = (theme, focus = false) => {
+      const themeSwitcher = document.querySelector('#bd-theme')
+
+      if (!themeSwitcher) {
+        return
+      }
+
+      const themeSwitcherText = document.querySelector('#bd-theme-text')
+      const activeThemeIcon = document.querySelector('.theme-icon-active use')
+      const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+      const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
+
+      document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+        element.classList.remove('active')
+        element.setAttribute('aria-pressed', 'false')
+      })
+
+      btnToActive.classList.add('active')
+      btnToActive.setAttribute('aria-pressed', 'true')
+      activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+      const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
+      themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+
+      if (focus) {
+        themeSwitcher.focus()
+      }
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const storedTheme = getStoredTheme()
+      if (storedTheme !== 'light' && storedTheme !== 'dark') {
+        setTheme(getPreferredTheme())
+      }
+    })
+
+    window.addEventListener('DOMContentLoaded', () => {
+      showActiveTheme(getPreferredTheme())
+
+      document.querySelectorAll('[data-bs-theme-value]')
+        .forEach(toggle => {
+          toggle.addEventListener('click', () => {
+            const theme = toggle.getAttribute('data-bs-theme-value')
+            setStoredTheme(theme)
+            setTheme(theme)
+            showActiveTheme(theme, true)
+          })
+        })
+    })
+  })()
+  document.querySelector('.dropdown-toggle').addEventListener('click', function () {
+            const dropdown = bootstrap.Dropdown.getInstance(this);
+
+            // Automatically hide the dropdown after 3 seconds
+            setTimeout(() => {
+                if (dropdown._menu.classList.contains('show')) {
+                    dropdown.hide(); // Use Bootstrap's method to hide the dropdown
+                }
+            }, 6000); // Time in milliseconds (3 seconds)
+        });
+    </script>
+</body>
+</html>
